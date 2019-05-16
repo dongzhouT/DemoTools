@@ -64,11 +64,19 @@
                 android:layout_height="wrap_content"
                 android:onClick="showRxDemo"
                 android:text="rxjava demo" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="showRxPermissionDemo"
                 android:text="rxPermission demo" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="showMvpDemo"
+                android:text="MVP demo" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

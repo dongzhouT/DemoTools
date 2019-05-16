@@ -6,6 +6,7 @@ import java.util.List;
 import okhttp3.Response;
 
 /**
+ * 实现okhttp核心功能
  * created by taodzh on 2019/4/28
  */
 public class Main {

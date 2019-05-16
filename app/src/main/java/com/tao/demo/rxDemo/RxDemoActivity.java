@@ -63,6 +63,7 @@ public class RxDemoActivity extends AppCompatActivity {
                 .addInterceptor(interceptor)
                 .build();
         final String imgPath = "http://eplusplatform.oss-cn-beijing.aliyuncs.com/LaunchScreen/b28b46811d7cbab8eb5f24c727342387.jpg";
+        //rxjava 获取图片
         Observable.just(imgPath)
                 .map(new Function<String, Bitmap>() {
                     @Override
@@ -72,16 +73,18 @@ public class RxDemoActivity extends AppCompatActivity {
                     }
 
                 })
+                //线程切换
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Bitmap>() {
                     @Override
                     public void accept(Bitmap bitmap) throws Exception {
-                        imageView.setImageBitmap(bitmap);
+//                        imageView.setImageBitmap(bitmap);
                     }
                 });
         doMockLogin();
         doLogin();
+        //动态代理
         //返回接口的实例对象
         final IBitmapFunc funcc =
                 (IBitmapFunc) Proxy.newProxyInstance(IBitmapFunc.class.getClassLoader(),
@@ -95,14 +98,7 @@ public class RxDemoActivity extends AppCompatActivity {
                     Message msg = mHandler.obtainMessage();
                     msg.what = CODE_IMAGE;
                     msg.obj = b;
-//                    mHandler.sendMessage(msg);
-//                    mHandler.post()
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            imageView.setImageBitmap(b);
-//                        }
-//                    });
+                    mHandler.sendMessage(msg);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -158,6 +154,7 @@ public class RxDemoActivity extends AppCompatActivity {
         Bitmap getBitmap(String s) throws Exception;
     }
 
+    //okhttp获取图片
     class OkHttpBitmap implements IBitmapFunc {
 
         @Override
@@ -171,6 +168,7 @@ public class RxDemoActivity extends AppCompatActivity {
         }
     }
 
+    //httpUrlConnection 获取图片
     class HttpBitmap implements IBitmapFunc {
 
         @Override

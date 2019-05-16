@@ -88,4 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void showRxPermissionDemo(View view) {
         startNewActivity(RxpermissionDemoActivity.class);
     }
+    public void showMvpDemo(View view) {
+        startNewActivity(MyActivity.class);
+    }
 }
