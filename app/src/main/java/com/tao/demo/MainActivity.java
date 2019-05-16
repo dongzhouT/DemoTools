@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.tao.demo.mvpDemo.MyActivity;
 import com.tao.demo.nfcDemo.NFCActivity;
 import com.tao.demo.rxDemo.RxDemoActivity;
+import com.tao.demo.rxpermission.RxpermissionDemoActivity;
 import com.tao.demo.scroll.ScrollActivity;
 import com.tao.demo.viewpager.ViewPagerActivity;
 
@@ -82,5 +83,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void showRxDemo(View view) {
         startNewActivity(RxDemoActivity.class);
+    }
+
+    public void showRxPermissionDemo(View view) {
+        startNewActivity(RxpermissionDemoActivity.class);
     }
 }
