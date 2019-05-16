@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    tools:context=".TempActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.tao.demo.CustomTempView
+            android:id="@+id/view1"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center_horizontal" />
+
+        <com.tao.demo.widget.LinearGradientTextview
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:text="是谁在唱歌，温暖了寂寞"
+            android:textColor="#000"
+            android:textSize="30dp" />
+
+        <com.tao.demo.widget.RoundImage
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:src="@drawable/timg" />
+
+
+    </LinearLayout>
+
+</ScrollView>
