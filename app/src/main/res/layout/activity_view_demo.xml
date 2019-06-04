@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".viewDemo.ViewDemoActivity">
+
+    <SeekBar
+        android:layout_width="300dp"
+        android:layout_height="40dp" />
+
+    <Switch
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:switchMinWidth="80dp"
+        android:thumb="@drawable/ic_custom_thumb"
+        android:track="@drawable/ic_custom_track" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/id_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"></android.support.v7.widget.RecyclerView>
+
+    <AutoCompleteTextView
+        android:id="@+id/auto_textview"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+</LinearLayout>

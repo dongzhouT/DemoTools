@@ -1,6 +1,8 @@
 package com.tao.demo.net;
 
 
+import com.tao.demo.mvpDemo.loginDemo.IBaseView;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
@@ -25,5 +27,19 @@ public class RxSchedulers {
 
     public static <T> ObservableTransformer<T, T> applySchedulers() {
         return (ObservableTransformer<T, T>) schedulersTransformer;
+    }
+
+    public static <T> ObservableTransformer<T, T> applySchedulers(IBaseView view) {
+        new ObservableTransformer<T, T>() {
+
+            @Override
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return null;
+            }
+        };
+        return observable -> observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(view.bindLifeCycle());
+//        return (ObservableTransformer<T, T>) schedulersTransformer;
     }
 }

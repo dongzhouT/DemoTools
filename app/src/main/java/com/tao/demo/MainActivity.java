@@ -10,11 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
+import com.tao.demo.minaDemo.MinaDemoActivity;
 import com.tao.demo.mvpDemo.MyActivity;
+import com.tao.demo.mvpDemo.loginDemo.LoginActivity;
+import com.tao.demo.mvpDemo.loginDemo.LoginActivity_;
 import com.tao.demo.nfcDemo.NFCActivity;
 import com.tao.demo.rxDemo.RxDemoActivity;
 import com.tao.demo.rxpermission.RxpermissionDemoActivity;
 import com.tao.demo.scroll.ScrollActivity;
+import com.tao.demo.tabDemo.TabDemoActivity;
+import com.tao.demo.viewDemo.ViewDemoActivity;
 import com.tao.demo.viewpager.ViewPagerActivity;
 
 import javax.xml.datatype.Duration;
@@ -88,7 +93,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void showRxPermissionDemo(View view) {
         startNewActivity(RxpermissionDemoActivity.class);
     }
+
     public void showMvpDemo(View view) {
-        startNewActivity(MyActivity.class);
+//        startNewActivity(MyActivity.class);
+//        startNewActivity(LoginActivity.class);
+        LoginActivity_.intent(this).start();
+    }
+
+    public void showMinaDemo(View view) {
+        startNewActivity(MinaDemoActivity.class);
+    }
+
+    public void showTabDemo(View view) {
+        startNewActivity(TabDemoActivity.class);
+    }
+
+    public void showViewDemo(View view) {
+        startNewActivity(ViewDemoActivity.class);
     }
 }

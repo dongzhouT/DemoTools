@@ -15,14 +15,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".viewDemo.ViewDemoActivity"></activity>
+        <activity android:name=".tabDemo.TabDemoActivity" />
+        <activity android:name=".mvpDemo.loginDemo.BaseActivity_" />
+        <activity android:name=".mvpDemo.loginDemo.LoginActivity_" />
+        <activity android:name=".minaDemo.MinaDemoActivity" />
         <activity android:name=".nfcDemo.NFCActivity">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.nfc.action.TAG_DISCOVERED" />-->
 
-            <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.nfc.action.TAG_DISCOVERED" /> -->
 
-            <!--<data android:mimeType="*/*" />-->
-            <!--</intent-filter>-->
+
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+
+
+            <!-- <data android:mimeType="*/*" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".rxpermission.RxpermissionDemoActivity" />
         <activity android:name=".mvpDemo.MyActivity" />

@@ -1,4 +1,4 @@
-package com.haierac.nbiot.vrv_cac_android.utils;
+package com.tao.demo.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

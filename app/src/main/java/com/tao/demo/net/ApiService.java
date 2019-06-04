@@ -1,5 +1,9 @@
 package com.tao.demo.net;
 
+import com.tao.demo.mvpDemo.loginDemo.BaseEntity;
+import com.tao.demo.mvpDemo.loginDemo.BaseObserver;
+import com.tao.demo.mvpDemo.loginDemo.UserInfoResultBean;
+import com.tao.demo.mvpDemo.loginDemo.entity.LoginResultBean;
 import com.tao.demo.net.entity.CommentListBean;
 import com.tao.demo.net.entity.CommentResultBean;
 import com.tao.demo.net.entity.GeneralBean;
@@ -32,7 +36,16 @@ import retrofit2.http.Query;
 public interface ApiService {
     @FormUrlEncoded
     @POST("http://vrf.api.eplusplatform.com/manager/app/login")
-    Observable<String> login(@Field("username") String username,@Field("password") String password);
+    Observable<String> login(@Field("username") String username, @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("http://vrf.api.eplusplatform.com/manager/app/login")
+    Observable<BaseEntity<UserInfoResultBean>> login2(@Field("username") String username, @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("http://vrf.api.eplusplatform.com/manager/app/login")
+    Observable<LoginResultBean> login4(@Field("username") String username, @Field("password") String password);
+
     //开屏广告
     @GET("http://ml.api.eplusplatform.com/openingAdvertising/obtain")
     Observable<OpenAdBean> getAd();
