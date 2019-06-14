@@ -7,10 +7,15 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.widget.ScrollView;
+import android.widget.TextView;
+
+import com.tao.demo.widget.TempImageview;
 
 public class TempActivity extends Activity {
     ScrollView scrollView;
     CustomTempView view1;
+    TempImageview tempImageview;
+    TextView tvTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,5 +40,13 @@ public class TempActivity extends Activity {
                 Looper.myQueue();
             }
         }).start();
+        tvTemp = findViewById(R.id.tv_temp);
+        tempImageview = findViewById(R.id.id_tp_temp);
+        tempImageview.setChangeListener(new TempImageview.OnTempChangeListener() {
+            @Override
+            public void onTempChange(String temp) {
+                tvTemp.setText("" + temp);
+            }
+        });
     }
 }

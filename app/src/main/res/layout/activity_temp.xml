@@ -27,11 +27,33 @@
             android:textSize="30dp" />
 
         <com.tao.demo.widget.RoundImage
-            android:layout_width="400dp"
-            android:layout_height="400dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
             android:src="@drawable/timg" />
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_bg_ctrl">
 
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="131dp"
+                android:src="@drawable/ic_temp_blue" />
+
+            <com.tao.demo.widget.TempImageview
+                android:id="@+id/id_tp_temp"
+                android:layout_width="250dp"
+                android:layout_height="131dp"
+                android:src="@drawable/ic_temp_bg" />
+
+            <TextView
+                android:id="@+id/tv_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="qqqqq"
+                android:textColor="#fff" />
+        </FrameLayout>
     </LinearLayout>
 
 </ScrollView>
