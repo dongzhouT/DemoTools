@@ -1,5 +1,6 @@
 package com.tao.demo.widget;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -9,6 +10,9 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.animation.AccelerateDecelerateInterpolator;
+
+import com.tao.demo.R;
 
 /**
  * @author taodzh
@@ -20,10 +24,11 @@ public class TempImageview extends AppCompatImageView {
     float radius;
     RectF rectF;
     double sweepAngle = -190;
-    int sizeOffset = 10;//偏移量
-    float angleOffset = 3.5f;//角度偏移量
+    int sizeOffset = 10;//画布尺寸偏移量
+    float angleOffset = 3.22f;//角度偏移量
     boolean enabled = true, isMoving;
     private double settingTemp = 0;//设置温度
+    int tempNum = 28;//16~30度，温度间隔
     OnTempChangeListener changeListener;
     Paint mPaint;
 
@@ -71,6 +76,12 @@ public class TempImageview extends AppCompatImageView {
         mPaint.setStrokeWidth(2);
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
+        double d = 180 * 100 / (tempNum * 2);
+        //计算水滴角度
+        angleOffset = Math.round(d) / 100.0f;
+        //设置背景图片
+        setImageResource(R.drawable.ic_temp_bg);
+        setBackgroundResource(R.drawable.ic_temp_blue);
     }
 
     @Override
@@ -81,7 +92,8 @@ public class TempImageview extends AppCompatImageView {
         path.lineTo(rectF.width() / 2, getHeight());
         path.close();
         canvas.clipPath(path);
-        canvas.drawPath(path, mPaint);
+        //画图辅助,调试时打开
+//        canvas.drawPath(path, mPaint);
         super.onDraw(canvas);
     }
 
@@ -101,6 +113,9 @@ public class TempImageview extends AppCompatImageView {
             case MotionEvent.ACTION_MOVE:
                 sweepAngle = Math.toDegrees(Math.atan2(radius - y, x - radius));
                 Log.e(TAG, "r=" + radius + ",x=" + x + ",y=" + y + ",sweepAngle=" + sweepAngle);
+
+                double angle1 = sweepAngle;
+                //越界处理
                 if (y > radius && x < radius) {
                     sweepAngle = -180;
                 } else if (y > radius && x > radius) {
@@ -108,21 +123,13 @@ public class TempImageview extends AppCompatImageView {
                 } else {
                     sweepAngle = sweepAngle < 0 ? 0 : -sweepAngle;
                 }
-                if (sweepAngle <= 0 && sweepAngle >= -90) {
-                    sweepAngle += angleOffset;
-                } else if (sweepAngle < -90 && sweepAngle >= -180) {
-                    sweepAngle -= angleOffset;
-                }
-                double aaa = 30 - Math.round((Math.abs(sweepAngle) * 28 / 180)) / 2.0f;
-//                settingTemp = Math.round((sweepAngle / 360) * 14 + 16);//滑动加一度放开此行
-                settingTemp = Math.round((sweepAngle / 360) * 28 + 32) / 2.0f;//滑动增加0.5度
-                settingTemp = aaa;
-//                Math.abs(sweepAngle)
-                Log.e(TAG, "sweep=" + sweepAngle + ",temp=" + settingTemp);
+                double tempDt = Math.round((Math.abs(sweepAngle) * tempNum / 180)) / 2.0f;
+                settingTemp = 30 - tempDt;
+                Log.e(TAG, "sweep=" + sweepAngle + ",temp=" + settingTemp + ",dt=" + tempDt);
 //                Log.e("event", "============:" + "x:" + (x - radius) + ",Y:" + (radius - y) + ",sweepAngle:" + Math.tosweepAngles(Math.atan2(x - radius, radius - y)));
                 if (changeListener != null) {
 //                    changeListener.onTempChange((float) settingTemp);
-                    changeListener.onTempChange(settingTemp + ",sweep=" + sweepAngle);
+                    changeListener.onTempChange(settingTemp + ",angle1=" + angle1 + ",sweep=" + sweepAngle + ",dt=" + tempDt);
                 }
                 setTemp(settingTemp);
 //                invalidate();
@@ -139,14 +146,33 @@ public class TempImageview extends AppCompatImageView {
     //设置温度
     public void setTemp(double temp) {
         settingTemp = temp;
-        if (settingTemp > 23) {
-            sweepAngle = (settingTemp - 16) * 360 / 28 - 180 + angleOffset;
-        } else if (settingTemp == 23) {
-            sweepAngle = (settingTemp - 16) * 360 / 28 - 180;
-        } else {
-            sweepAngle = (settingTemp - 16) * 360 / 28 - 180 - angleOffset;
-        }
+        calcAngle();
         invalidate();
+    }
+
+    /**
+     * 初始化温度，带动画
+     *
+     * @param temp
+     */
+    public void setTempWithAnim(double temp) {
+        settingTemp = temp;
+        startAnimation(16.0f);
+    }
+
+    /**
+     * 从当前温度调节到设定温度
+     *
+     * @param dstTemp 调节温度
+     */
+    public void setTempTo(double dstTemp) {
+        setTemp(settingTemp);
+        settingTemp = dstTemp;
+        startAnimation(settingTemp);
+    }
+
+    private void calcAngle() {
+        sweepAngle = (settingTemp - 16) * 360 / tempNum - 180 * (28 / tempNum) + angleOffset;
     }
 
     @Override
@@ -157,6 +183,26 @@ public class TempImageview extends AppCompatImageView {
     @Override
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+        if (enabled) {
+            this.setImageResource(R.drawable.ic_temp_blue);
+        } else {
+            setTemp(30);
+            this.setImageResource(R.drawable.ic_temp_offline);
+        }
+    }
+
+    private void startAnimation(double startTemp) {
+        ValueAnimator anim = ValueAnimator.ofFloat((float) startTemp, (float) settingTemp);
+        anim.setDuration(2000);
+        anim.setInterpolator(new AccelerateDecelerateInterpolator());
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                settingTemp = (float) animation.getAnimatedValue();
+                setTemp(settingTemp);
+            }
+        });
+        anim.start();
     }
 
     public interface OnTempChangeListener {

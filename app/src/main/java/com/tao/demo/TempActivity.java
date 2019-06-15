@@ -48,5 +48,8 @@ public class TempActivity extends Activity {
                 tvTemp.setText("" + temp);
             }
         });
+//        tempImageview.setTempWithAnim(26.0);
+        tempImageview.setTempWithAnim(26);
+//        tempImageview.setEnabled(false);
     }
 }
